@@ -1,15 +1,11 @@
 int motor1pin1 = 2;
 int motor1pin2 = 3;
 
-
-
 int motor2pin1 = 4;
 int motor2pin2 = 5;
 
 int motor3pin1 = 8;
 int motor3pin2 = 9;
-
-
 
 int motor4pin1 = 10;
 int motor4pin2 = 11;
@@ -26,8 +22,6 @@ pinMode(motor4pin1, OUTPUT);
 pinMode(motor4pin2, OUTPUT);
 }
 
-
-
 void loop() {
   forward();
   stopp();
@@ -38,10 +32,6 @@ void loop() {
   stopp();
   delay(5000);
 }
-
-
-
-
 
 void forward(){
   // Vorwärtsfahren
@@ -59,7 +49,6 @@ void forward(){
   delay(2500);
 }
 
-
 void stopp(){
   //Stopp
   digitalWrite(motor1pin1, LOW);
@@ -75,7 +64,6 @@ void stopp(){
   digitalWrite(motor4pin2, LOW);
   delay(2000);
 }
-
 
 void backward(){
   //Rückwärtsfahren
