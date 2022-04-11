@@ -1,19 +1,40 @@
 // Deklaration und Initialisierung der Eingang-Pins
+// PWM-Pins: 3, 5, 6, 9, 10, 11
+// TO-DO: pins umstecken, so dass 4 PWM Pins frei sind
+
+// Gleichstrommotor 1
 int motor1pin1 = 2;
 int motor1pin2 = 3;
+int GSM1 = ?;
+
+// Gleichstrommotor 2
 int motor2pin1 = 4;
 int motor2pin2 = 5;
+int GSM2 = ?;
+
+// Gleichstrommotor 3
 int motor3pin1 = 8;
 int motor3pin2 = 9;
+int GSM3 = ?;
+
+// Gleichstrommotor 4
 int motor4pin1 = 10;
 int motor4pin2 = 11;
+int GSM4 = ?;
+
+// Joystick
 int JoyStick_X = A0; // X-Achse-Signal
 int JoyStick_Y = A1; // Y-Achse-Signal
 int Button = 13; // Knopf
 
 
+
 void setup() {
-// Motor
+// Motoren
+pinMode(GSM1, OUTPUT);    
+pinMode(GSM2, OUTPUT);
+pinMode(GSM3, OUTPUT);    
+pinMode(GSM4, OUTPUT);
 pinMode(motor1pin1, OUTPUT);
 pinMode(motor1pin2, OUTPUT);
 pinMode(motor2pin1, OUTPUT);
@@ -32,7 +53,7 @@ pinMode (Button, INPUT);
 // schalten wir hiermit den PullUp-Widerstand ein
 digitalWrite(Button, HIGH);
 
-Serial.begin (9600); // Serielle Ausgabe mit 9600 bps
+Serial.begin (9600); // Serielle Ausgabe mit 9600 bps; nur zu Auslese-Testzwecke
 }
 
 
@@ -46,6 +67,7 @@ void loop() {
  // rightSpotTurn();
  // stopp();
  // delay(5000);
+ //analogWrite(GSM1, 200);   // Motor 1 soll mit der Geschwindigkeit "200" (max. 255) rotieren
 
   float x, y;
   int Knopf;
@@ -55,13 +77,13 @@ void loop() {
   x = analogRead (JoyStick_X) * (5.0 / 1023.0);
   y = analogRead (JoyStick_Y) * (5.0 / 1023.0);
   Knopf = digitalRead (Button);
-  //JoyStick_XTest = digitalRead (JoyStick_X);
   
   //... und an dieser Stelle ausgegeben
   Serial.print ("X-Achse:"); Serial.print (x, 4); Serial.print ("V, ");
   Serial.print ("Y-Achse:"); Serial.print (y, 4); Serial.print ("V, ");
   Serial.print ("Knopf:");
-  
+
+  //ausgelesene Werte:
   //links: X:0.00 Y:2.5
   //recht: X:5.00 Y:2.5
   //vorwärts: X:2.5 Y:5.00
@@ -89,11 +111,13 @@ if (y >= 4.8)
   }  else if (x <= 0.1)
   {
     Serial.println (" nach LINKS fahren");
-    leftSpotTurn();
+    //leftSpotTurn();
+    left();
   } else if (x >= 4.8)
   {
     Serial.println (" nach RECHTS fahren");
-    rightSpotTurn();
+    right()
+    //rightSpotTurn();
   }
   
 }
@@ -182,4 +206,42 @@ void rightSpotTurn(){
   digitalWrite(motor4pin1, LOW);
   digitalWrite(motor4pin2, HIGH);
   //delay(2000);
+}
+
+void left(){
+  // langsame Linkkurve
+  analogWrite(GSM1, 200);
+  digitalWrite(motor1pin1, HIGH);
+  digitalWrite(motor1pin2, LOW);
+
+  analogWrite(GSM1, 50);
+  digitalWrite(motor2pin1, HIGH);
+  digitalWrite(motor2pin2, LOW);
+
+  analogWrite(GSM1, 200);
+  digitalWrite(motor3pin1, HIGH);
+  digitalWrite(motor3pin2, LOW);
+
+  analogWrite(GSM1, 50);
+  digitalWrite(motor4pin1, HIGH);
+  digitalWrite(motor4pin2, LOW);
+}
+
+void right(){
+  // langsame Rechtskurve
+  analogWrite(GSM1, 50);
+  digitalWrite(motor1pin1, HIGH);
+  digitalWrite(motor1pin2, LOW);
+
+  analogWrite(GSM1, 200);
+  digitalWrite(motor2pin1, HIGH);
+  digitalWrite(motor2pin2, LOW);
+
+  analogWrite(GSM1, 50);
+  digitalWrite(motor3pin1, HIGH);
+  digitalWrite(motor3pin2, LOW);
+
+  analogWrite(GSM1, 200);
+  digitalWrite(motor4pin1, HIGH);
+  digitalWrite(motor4pin2, LOW);
 }
