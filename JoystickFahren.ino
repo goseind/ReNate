@@ -59,15 +59,6 @@ Serial.begin (9600); // Serielle Ausgabe mit 9600 bps; nur zu Auslese-Testzwecke
 
 
 void loop() {
- //forward();
- //stopp();
- // backward();
- // stopp();
- // delay(2500);
- // rightSpotTurn();
- // stopp();
- // delay(5000);
- //analogWrite(GSM1, 200);   // Motor 1 soll mit der Geschwindigkeit "200" (max. 255) rotieren
 
   float x, y;
   int Knopf;
@@ -82,6 +73,8 @@ void loop() {
   Serial.print ("X-Achse:"); Serial.print (x, 4); Serial.print ("V, ");
   Serial.print ("Y-Achse:"); Serial.print (y, 4); Serial.print ("V, ");
   Serial.print ("Knopf:");
+
+
 
   //ausgelesene Werte:
   //links: X:0.00 Y:2.5
@@ -103,21 +96,21 @@ void loop() {
   if (y >= 4.8)
   {
     Serial.println (" Vorwärts fahren!");
-    forward();
+    forward(50);
   }  else if (y <= 0.1)
   {
     Serial.println (" Rückwärts fahren!");
-    backward();
+    backward(50);
   }  else if (x <= 0.1)
   {
     Serial.println (" nach LINKS fahren");
-    //leftSpotTurn();
-    left();
+    //leftSpotTurn(50);
+    left(50, 200);
   } else if (x >= 4.8)
   {
     Serial.println (" nach RECHTS fahren");
-    right()
-    //rightSpotTurn();
+    right(200, 50)
+    //rightSpotTurn(50);
   }
   
 }
@@ -171,57 +164,57 @@ void wheel(int motor, bool forwardWheelSpin, int spinSpeed){
 
 
 
-void forward(){
+void forward(int wheelSpeed){
   // Vorwärtsfahren
-  wheel(1,true,50);
-  wheel(2,true,50);
-  wheel(3,true,50);
-  wheel(4,true,50);
+  wheel(1,true,wheelSpeed);
+  wheel(2,true,wheelSpeed);
+  wheel(3,true,wheelSpeed);
+  wheel(4,true,wheelSpeed);
   //delay(1000);
 }
 
 
-void backward(){
+void backward(int wheelSpeed){
   //Rückwärtsfahren
-  wheel(1,false,50);
-  wheel(2,false,50);
-  wheel(3,false,50);
-  wheel(4,false,50);
+  wheel(1,false,wheelSpeed);
+  wheel(2,false,wheelSpeed);
+  wheel(3,false,wheelSpeed);
+  wheel(4,false,wheelSpeed);
   //delay(1000);
 }
 
-void leftSpotTurn(){
+void leftSpotTurn(int wheelSpeed){
   // Rechts herum auf der Stelle drehen
-  wheel(1,false,50);
-  wheel(2,true,50);
-  wheel(1,false,50);
-  wheel(2,true,50);
+  wheel(1,false,wheelSpeed);
+  wheel(2,true,wheelSpeed);
+  wheel(1,false,wheelSpeed);
+  wheel(2,true,wheelSpeed);
   //delay(2000);
 }
 
-void rightSpotTurn(){
+void rightSpotTurn(int wheelSpeed){
   // Rechts herum auf der Stelle drehen
-  wheel(1,true,50);
-  wheel(2,false,50);
-  wheel(1,true,50);
-  wheel(2,false,50);
+  wheel(1,true,wheelSpeed);
+  wheel(2,false,wheelSpeed);
+  wheel(1,true,wheelSpeed);
+  wheel(2,false,wheelSpeed);
   //delay(2000);
 }
 
-void left(){
+void left(int leftWheelSpeed, int rightWheelSpeed){
   // langsame Linkkurve
-  wheel(1,true,200);
-  wheel(2,true,50);
-  wheel(3,true,200);
-  wheel(4,true,50);
+  wheel(1,true,rightWheelSpeed);
+  wheel(2,true,leftWheelSpeed);
+  wheel(3,true,rightWheelSpeed);
+  wheel(4,true,leftWheelSpeed);
 }
 
-void right(){
+void right(int leftWheelSpeed, int rightWheelSpeed){
   // langsame Rechtskurve
-  wheel(1,true,50);
-  wheel(2,true,200);
-  wheel(3,true,50);
-  wheel(4,true,200);
+  wheel(1,true,rightWheelSpeed);
+  wheel(2,true,leftWheelSpeed);
+  wheel(3,true,rightWheelSpeed);
+  wheel(4,true,leftWheelSpeed);
 }
 
 
