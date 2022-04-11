@@ -3,24 +3,24 @@
 // TO-DO: pins umstecken, so dass 4 PWM Pins frei sind
 
 // Gleichstrommotor 1
-int motor1pin1 = 2;
-int motor1pin2 = 3;
-int GSM1 = ?;
+int motor1pin1 = 1;
+int motor1pin2 = 2;
+int GSM1 = 3;
 
 // Gleichstrommotor 2
 int motor2pin1 = 4;
-int motor2pin2 = 5;
-int GSM2 = ?;
+int motor2pin2 = 6;
+int GSM2 = 5;
 
 // Gleichstrommotor 3
-int motor3pin1 = 8;
-int motor3pin2 = 9;
-int GSM3 = ?;
+int motor3pin1 = 7;
+int motor3pin2 = 8;
+int GSM3 = 9;
 
 // Gleichstrommotor 4
 int motor4pin1 = 10;
-int motor4pin2 = 11;
-int GSM4 = ?;
+int motor4pin2 = 12;
+int GSM4 = 11;
 
 // Joystick
 int JoyStick_X = A0; // X-Achse-Signal
