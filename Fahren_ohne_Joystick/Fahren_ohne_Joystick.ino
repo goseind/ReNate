@@ -2,25 +2,26 @@
 // PWM-Pins: 3, 5, 6, 9, 10, 11
 // TO-DO: pins umstecken, so dass 4 PWM Pins frei sind
 
-// Gleichstrommotor 1
-int motor1pin1 = A5;
-int motor1pin2 = 2;
+// Gleichstrommotor 1 - hinten re (pink)
+int motor1pin1 = 2;
+int motor1pin2 = 4;
 int GSM1 = 3;
 
-// Gleichstrommotor 2
-int motor2pin1 = 4;
-int motor2pin2 = 6;
-int GSM2 = 5;
+// Gleichstrommotor 2 - hinten li (grün)
+int motor2pin1 = 5;
+int motor2pin2 = 7;
+int GSM2 = 6;
 
-// Gleichstrommotor 3
-int motor3pin1 = 7;
-int motor3pin2 = 8;
+// Gleichstrommotor 3 - vorne re (orange)
+int motor3pin1 = 8;
+int motor3pin2 = 10;
 int GSM3 = 9;
 
-// Gleichstrommotor 4
-int motor4pin1 = 10;
-int motor4pin2 = 12;
+// Gleichstrommotor 4 - vorne li
+int motor4pin1 = 12;
+int motor4pin2 = 13;
 int GSM4 = 11;
+
 
 
 void setup() {
@@ -41,112 +42,158 @@ void setup() {
 }
 
 void loop() {
-  forward(10);
-  stopp(2000);
- // backward(50);
- // stopp(2000);
- // left(50, 200);
- // stopp(2000);
- // right(200, 50);
- // stopp(2000);
-}
+  // 100 Umdrehungen mindestens, sonst laufen die Motoren nicht!
+  //stopp(5000);
+  //forward(150, 1000);
+  //stopp(2000);
+  //backward(150, 1000);
+  //stopp(2000);
+  // Auf der Stelle Drehen
+  //leftSpotTurn(250, 1000);
+  //stopp(2000);
+  //rightSpotTurn(250,1000);
+  //stopp(2000);
+  // Kurvenfahren
+  //left(10, 255, 5000);
+  //stopp(2000);
+  //right(255, 10, 5000);
+  //stopp(2000);
+  // sehr gemächtliches Kurvenfahren
+  //left(80, 255, 5000);
+  //stopp(2000);
+  //right(255, 80, 10000);
+  //stopp(2000);
 
-
-
-void wheel(int motor, bool forwardWheelSpin, int spinSpeed){
-  if (forwardWheelSpin == true){
-    if(motor == 1){
-      digitalWrite(GSM1, spinSpeed);
-      digitalWrite(motor1pin1, HIGH);
-      digitalWrite(motor1pin2, LOW);
-    } else if(motor == 2){
-      digitalWrite(GSM2, spinSpeed);
-      digitalWrite(motor2pin1, HIGH);
-      digitalWrite(motor2pin2, LOW);
-    } else if(motor == 3){
-      digitalWrite(GSM3, spinSpeed);
-      digitalWrite(motor3pin1, HIGH);
-      digitalWrite(motor3pin2, LOW);
-    } else if(motor == 4){
-      digitalWrite(GSM4, spinSpeed);
-      digitalWrite(motor4pin1, HIGH);
-      digitalWrite(motor4pin2, LOW);
-    }
-  } else if (forwardWheelSpin == false){
-    if(motor == 1){
-      digitalWrite(GSM1, spinSpeed);
-      digitalWrite(motor1pin1, LOW);
-      digitalWrite(motor1pin2, HIGH);
-    } else if(motor == 2){
-      digitalWrite(GSM2, spinSpeed);
-      digitalWrite(motor2pin1, LOW);
-      digitalWrite(motor2pin2, HIGH);
-    } else if(motor == 3){
-      digitalWrite(GSM3, spinSpeed);
-      digitalWrite(motor3pin1, LOW);
-      digitalWrite(motor3pin2, HIGH);
-    } else if(motor == 4){
-      digitalWrite(GSM4, spinSpeed);
-      digitalWrite(motor4pin1, LOW);
-      digitalWrite(motor4pin2, HIGH);
-    }
-  }
 }
 
 
 
 
-void forward(int wheelSpeed){
+
+
+
+
+void forward(int wheelspeed, int drivetime){
   // Vorwärtsfahren
-  wheel(1,true,wheelSpeed);
-  wheel(2,true,wheelSpeed);
-  wheel(3,true,wheelSpeed);
-  wheel(4,true,wheelSpeed);
-  //delay(1000);
+  analogWrite(GSM1, wheelspeed);
+  digitalWrite(motor1pin1, HIGH);
+  digitalWrite(motor1pin2, LOW);
+
+  analogWrite(GSM2, wheelspeed);
+  digitalWrite(motor2pin1, HIGH);
+  digitalWrite(motor2pin2, LOW);
+
+  analogWrite(GSM3, wheelspeed);
+  digitalWrite(motor3pin1, HIGH);
+  digitalWrite(motor3pin2, LOW);
+
+  analogWrite(GSM4, wheelspeed);
+  digitalWrite(motor4pin1, HIGH);
+  digitalWrite(motor4pin2, LOW);
+  delay(drivetime);
 }
 
 
-void backward(int wheelSpeed){
+void backward(int wheelspeed, int drivetime){
   //Rückwärtsfahren
-  wheel(1,false,wheelSpeed);
-  wheel(2,false,wheelSpeed);
-  wheel(3,false,wheelSpeed);
-  wheel(4,false,wheelSpeed);
-  //delay(1000);
+  analogWrite(GSM1, wheelspeed);
+  digitalWrite(motor1pin1, LOW);
+  digitalWrite(motor1pin2, HIGH);
+
+  analogWrite(GSM2, wheelspeed);
+  digitalWrite(motor2pin1, LOW);
+  digitalWrite(motor2pin2, HIGH);
+
+  analogWrite(GSM3, wheelspeed);
+  digitalWrite(motor3pin1, LOW);
+  digitalWrite(motor3pin2, HIGH);
+
+  analogWrite(GSM4, wheelspeed);
+  digitalWrite(motor4pin1, LOW);
+  digitalWrite(motor4pin2, HIGH);
+  delay(drivetime);
 }
 
-void leftSpotTurn(int wheelSpeed){
+void leftSpotTurn(int wheelspeed, int drivetime){
   // Rechts herum auf der Stelle drehen
-  wheel(1,false,wheelSpeed);
-  wheel(2,true,wheelSpeed);
-  wheel(3,false,wheelSpeed);
-  wheel(4,true,wheelSpeed);
-  //delay(2000);
+  analogWrite(GSM1, wheelspeed);
+  digitalWrite(motor1pin1, HIGH);
+  digitalWrite(motor1pin2, LOW);
+
+  analogWrite(GSM2, wheelspeed);
+  digitalWrite(motor2pin1, LOW);
+  digitalWrite(motor2pin2, HIGH);
+
+  analogWrite(GSM3, wheelspeed);
+  digitalWrite(motor3pin1, HIGH);
+  digitalWrite(motor3pin2, LOW);
+
+  analogWrite(GSM4, wheelspeed);
+  digitalWrite(motor4pin1, LOW);
+  digitalWrite(motor4pin2, HIGH);
+  delay(drivetime);
 }
 
-void rightSpotTurn(int wheelSpeed){
+void rightSpotTurn(int wheelspeed, int drivetime){
   // Rechts herum auf der Stelle drehen
-  wheel(1,true,wheelSpeed);
-  wheel(2,false,wheelSpeed);
-  wheel(3,true,wheelSpeed);
-  wheel(4,false,wheelSpeed);
-  //delay(2000);
+  analogWrite(GSM1, wheelspeed);
+  digitalWrite(motor1pin1, LOW);
+  digitalWrite(motor1pin2, HIGH);
+
+  analogWrite(GSM2, wheelspeed);
+  digitalWrite(motor2pin1, HIGH);
+  digitalWrite(motor2pin2, LOW);
+
+  analogWrite(GSM3, wheelspeed);
+  digitalWrite(motor3pin1, LOW);
+  digitalWrite(motor3pin2, HIGH);
+
+  analogWrite(GSM4, wheelspeed);
+  digitalWrite(motor4pin1, HIGH);
+  digitalWrite(motor4pin2, LOW);
+  delay(drivetime);
 }
 
-void left(int leftWheelSpeed, int rightWheelSpeed){
-  // langsame Linkkurve
-  wheel(1,true,rightWheelSpeed);
-  wheel(2,true,leftWheelSpeed);
-  wheel(3,true,rightWheelSpeed);
-  wheel(4,true,leftWheelSpeed);
+
+void left(int wheelSpeedLeft, int wheelSpeedRight, int drivetime){
+  // Links herum fahren
+  analogWrite(GSM1, wheelSpeedLeft);
+  digitalWrite(motor1pin1, HIGH);
+  digitalWrite(motor1pin2, LOW);
+
+  analogWrite(GSM2, wheelSpeedRight);
+  digitalWrite(motor2pin1, HIGH);
+  digitalWrite(motor2pin2, LOW);
+
+  analogWrite(GSM3, wheelSpeedLeft);
+  digitalWrite(motor3pin1, HIGH);
+  digitalWrite(motor3pin2, LOW);
+
+  analogWrite(GSM4, wheelSpeedRight);
+  digitalWrite(motor4pin1, HIGH);
+  digitalWrite(motor4pin2, LOW);
+  delay(drivetime);
 }
 
-void right(int leftWheelSpeed, int rightWheelSpeed){
-  // langsame Rechtskurve
-  wheel(1,true,rightWheelSpeed);
-  wheel(2,true,leftWheelSpeed);
-  wheel(3,true,rightWheelSpeed);
-  wheel(4,true,leftWheelSpeed);
+
+void right(int wheelSpeedLeft, int wheelSpeedRight, int drivetime){
+  // Rechts herum fahren
+  analogWrite(GSM1, wheelSpeedLeft);
+  digitalWrite(motor1pin1, HIGH);
+  digitalWrite(motor1pin2, LOW);
+
+  analogWrite(GSM2, wheelSpeedRight);
+  digitalWrite(motor2pin1, HIGH);
+  digitalWrite(motor2pin2, LOW);
+
+  analogWrite(GSM3, wheelSpeedLeft);
+  digitalWrite(motor3pin1, HIGH);
+  digitalWrite(motor3pin2, LOW);
+
+  analogWrite(GSM4, wheelSpeedRight);
+  digitalWrite(motor4pin1, HIGH);
+  digitalWrite(motor4pin2, LOW);
+  delay(drivetime);
 }
 
 
