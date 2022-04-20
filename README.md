@@ -1,4 +1,4 @@
-# ReNate
+# ReNaturation Robotic System (ReNate) with Arduino & Azure IOT
 
 ![ReNate](renate.jpg)
 
